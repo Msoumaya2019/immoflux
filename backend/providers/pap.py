@@ -6,6 +6,7 @@ from urllib.parse import urljoin
 from .http import PoliteClient
 from .result import PartialResult
 from urllib.error import HTTPError
+from .html import Document
 
 ID = "pap"
 NAME = "PAP"
@@ -63,6 +64,35 @@ def parse_detail(content, url, transaction):
             "agency": "", "landSurface": props.get("Surface du terrain")}
 
 
+def parse_cards(content, transaction="sale"):
+    result = []
+    for card in Document(content).root.find_all("search-list-item-alt"):
+        title = card.find("item-title")
+        price = card.find("item-price")
+        location = title.find("h1") if title else None
+        href = title.attrs.get("href", "") if title else ""
+        match = re.fullmatch(r"/annonces/(maison|appartement|pavillon)-[^?]+-r(\d+)", href)
+        city_match = re.fullmatch(r"\s*(.*?)\s*\((\d{5})\)\s*", location.text()) if location else None
+        if not match or not city_match or not price:
+            continue
+        tags = card.find("item-tags")
+        tags_text = tags.text() if tags else ""
+        rooms = re.search(r"(\d+)\s*pièces?", tags_text)
+        bedrooms = re.search(r"(\d+)\s*chambres?", tags_text)
+        surface = re.search(r"([\d.,]+)\s*m²", tags_text)
+        description = card.find("item-description")
+        images = [x.attrs["src"] for x in card.tags("img") if x.attrs.get("src", "").startswith("https://cdn.pap.fr/")]
+        result.append({"sourceListingId": match.group(2), "url": urljoin("https://www.pap.fr", href),
+            "title": f"{match.group(1).capitalize()} à {city_match.group(1)}", "propertyType": match.group(1),
+            "transactionType": transaction, "price": int(re.sub(r"\D", "", price.text())),
+            "city": city_match.group(1), "postalCode": city_match.group(2),
+            "rooms": int(rooms.group(1)) if rooms else None, "bedrooms": int(bedrooms.group(1)) if bedrooms else None,
+            "surface": float(surface.group(1).replace(",", ".")) if surface else None,
+            "description": ((description.text() if description else "") + "\n[Extrait de la liste PAP ; consulter la fiche originale pour le texte complet.]"),
+            "imageUrls": images})
+    return result
+
+
 def fetch(config):
     if config.get("publicRedistributionAuthorized") is not True:
         raise ValueError("Public redistribution authorization required")
@@ -71,8 +101,11 @@ def fetch(config):
         raise ValueError("Configure 1 to 5 authorized PAP search pages")
     client = PoliteClient("https://www.pap.fr")
     links = {}
+    cards = {}
     for entry in pages:
-        page = Page(client.get(entry["url"]))
+        content = client.get(entry["url"])
+        page = Page(content)
+        cards.update({x["url"]: x for x in parse_cards(content, entry.get("transactionType", "sale"))})
         if not page.links:
             raise ValueError("No PAP listing links; parser must be verified")
         for link in page.links[:20]:
@@ -84,10 +117,12 @@ def fetch(config):
             result.append(parse_detail(client.get(link), link, transaction))
         except HTTPError as error:
             warnings.append(f"HTTP {error.code}")
+            if link in cards: result.append(cards[link])
             if error.code in (401, 403, 429):
                 break  # Stop immediately on protection or throttling; never bypass/retry.
         except ValueError:
             warnings.append("fiche redirigée ou format modifié")
+            if link in cards: result.append(cards[link])
     if warnings:
         if not result:
             raise ValueError("Aucune fiche récupérée : " + ", ".join(sorted(set(warnings))))
