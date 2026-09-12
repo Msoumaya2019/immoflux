@@ -1,0 +1,7 @@
+{
+  "searches": [
+    {"city": "Montmagny", "postalCode": "95360", "transactionType": "sale", "minRooms": 0}
+  ],
+  "retentionDays": 90,
+  "maxListings": 2000
+}

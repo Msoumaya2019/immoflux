@@ -1,0 +1,41 @@
+name: Tests et sécurité
+on:
+  push:
+    branches: [main]
+    paths-ignore: ['data/**', 'public/**', '**.md']
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Tests hors ligne et contrat JSON
+        run: |
+          python -m compileall -q backend scripts tests
+          python -m unittest discover -s tests -v
+          python -m scripts.validate
+          python -m scripts.check_secrets
+      - name: Recherche de secrets dans les commits
+        run: docker run --rm -v "$PWD:/repo" ghcr.io/gitleaks/gitleaks:v8.24.2 git /repo --redact
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.24'
+          cache: false
+      - name: Vérifier les workflows
+        run: |
+          go install github.com/rhysd/actionlint/cmd/actionlint@v1.7.7
+          actionlint -color
+      - name: Résumé
+        if: always()
+        env:
+          RESULT: ${{ job.status }}
+        run: printf '## Tests backend et sécurité\n\nRésultat : %s\n' "$RESULT" >> "$GITHUB_STEP_SUMMARY"

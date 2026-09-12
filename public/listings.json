@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-12T00:19:22Z",
+  "lastSuccessfulFetch": null,
+  "coverage": [
+    {
+      "city": "Montmagny",
+      "postalCode": "95360",
+      "transactionType": "sale",
+      "minRooms": 0
+    }
+  ],
+  "listings": []
+}

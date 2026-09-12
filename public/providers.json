@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-12T00:19:22Z",
+  "providers": [
+    {
+      "id": "leboncoin",
+      "name": "Leboncoin",
+      "enabled": false,
+      "status": "disabled",
+      "message": "Accès et republication non autorisés à ce stade ; adaptateur non implémenté.",
+      "lastRun": "2026-09-12T00:19:22Z",
+      "count": 0,
+      "lastSuccess": null
+    },
+    {
+      "id": "seloger",
+      "name": "SeLoger",
+      "enabled": false,
+      "status": "disabled",
+      "message": "Test réel : HTTP 403. Accès technique bloqué malgré l’autorisation déclarée ; aucune protection contournée.",
+      "lastRun": "2026-09-12T00:19:22Z",
+      "count": 0,
+      "lastSuccess": null
+    },
+    {
+      "id": "bienici",
+      "name": "Bien’ici",
+      "enabled": false,
+      "status": "disabled",
+      "message": "Accès et republication non autorisés à ce stade ; adaptateur non implémenté.",
+      "lastRun": "2026-09-12T00:19:22Z",
+      "count": 0,
+      "lastSuccess": null
+    },
+    {
+      "id": "pap",
+      "name": "PAP",
+      "enabled": true,
+      "status": "error",
+      "message": "Échec de collecte (HTTPError). Dernières données conservées.",
+      "lastRun": "2026-09-12T00:19:22Z",
+      "count": 0,
+      "lastSuccess": null
+    },
+    {
+      "id": "aci",
+      "name": "ACI Immobilier",
+      "enabled": false,
+      "status": "disabled",
+      "message": "Agence et flux autorisé à identifier ; adaptateur non implémenté.",
+      "lastRun": "2026-09-12T00:19:22Z",
+      "count": 0,
+      "lastSuccess": null
+    },
+    {
+      "id": "authorized_json",
+      "name": "Flux JSON autorisé",
+      "enabled": false,
+      "status": "disabled",
+      "message": "Aucun flux autorisé configuré ; tests uniquement sur fixtures locales.",
+      "lastRun": "2026-09-12T00:19:22Z",
+      "count": 0,
+      "lastSuccess": null
+    }
+  ]
+}

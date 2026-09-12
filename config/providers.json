@@ -1,0 +1,18 @@
+{
+  "leboncoin": {"enabled": false},
+  "seloger": {"enabled": false},
+  "bienici": {"enabled": false},
+  "pap": {
+    "enabled": true,
+    "publicRedistributionAuthorized": true,
+    "permissionReference": "Autorisation de collecte et republication déclarée par le propriétaire du projet ; à revalider avant tout fork.",
+    "searchPages": [{"url": "https://www.pap.fr/annonce/vente-immobiliere-montmagny-95360-g43441", "transactionType": "sale"}]
+  },
+  "aci": {"enabled": false},
+  "authorized_json": {
+    "enabled": false,
+    "url": "",
+    "publicRedistributionAuthorized": false,
+    "permissionReference": ""
+  }
+}
