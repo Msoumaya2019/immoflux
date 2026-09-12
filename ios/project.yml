@@ -35,8 +35,21 @@ targets:
         INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
         INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: UIInterfaceOrientationPortrait
         INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO
+  ImmoFluxUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - path: ImmoFluxUITests
+    dependencies:
+      - target: ImmoFlux
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: org.immoflux.app.uitests
+        GENERATE_INFOPLIST_FILE: YES
 schemes:
   ImmoFlux:
     build:
       targets:
         ImmoFlux: all
+    test:
+      targets: [ImmoFluxUITests]

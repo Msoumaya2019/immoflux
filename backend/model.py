@@ -64,6 +64,8 @@ def normalize(raw, source, timestamp):
             item[key] = None
     for key, limit in (("description", 20000), ("agency", 200)):
         item[key] = str(raw.get(key) or "")[:limit]
+    item["description"] = re.sub(r"[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}", "[coordonnées retirées]", item["description"])
+    item["description"] = re.sub(r"(?<!\d)(?:\+33\s?|0)[1-9](?:[ .-]?\d{2}){4}(?!\d)", "[téléphone retiré]", item["description"])
     images = raw.get("imageUrls") or []
     if not isinstance(images, list):
         raise ValueError("imageUrls must be an array")

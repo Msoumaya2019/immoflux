@@ -228,7 +228,7 @@ struct FiltersView: View {
         Form {
             LocationFields()
             Section("Votre recherche") {
-                Picker("Transaction", selection: $store.preferences.transaction) {
+                Picker("Transaction", selection: $store.preferences.transactionType) {
                     Text("Vente").tag("sale"); Text("Location").tag("rent")
                 }
                 Stepper("Pièces minimum : \(store.preferences.minRooms)", value: $store.preferences.minRooms, in: 0...20)

@@ -81,7 +81,7 @@ enum APIError: LocalizedError {
         let covered = envelope.coverage.contains {
             SearchPreferences.fold($0.city) == SearchPreferences.fold(preferences.city)
             && ($0.postalCode == nil || $0.postalCode == "" || $0.postalCode == preferences.postalCode)
-            && $0.transactionType == preferences.transaction && preferences.minRooms >= $0.minRooms
+            && $0.transactionType == preferences.transactionType && preferences.minRooms >= $0.minRooms
         }
         return covered ? nil : "Recherche hors couverture du backend. Ajoutez cette ville, ce code postal ou cette transaction dans config/searches.json."
     }
@@ -117,6 +117,10 @@ enum APIError: LocalizedError {
                 let result = try await fetch(ListingsEnvelope.self, base: base, file: "listings.json")
                 guard result.schemaVersion == 1 else { throw APIError.schema }
                 retainSelections()
+                for item in result.listings {
+                    if isFavorite(item) { favorites.formUnion(item.allIDs) }
+                    if isHidden(item) { hidden.formUnion(item.allIDs) }
+                }
                 envelope = result
                 checkedAt = Date()
                 do {

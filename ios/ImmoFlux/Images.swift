@@ -1,5 +1,6 @@
 import SwiftUI
 import CryptoKit
+import ImageIO
 
 actor ImageCache {
     static let shared = ImageCache()
@@ -37,8 +38,14 @@ actor ImageCache {
             if let bytes { try? bytes.write(to: file, options: .atomic) }
             trimDisk()
         }
-        guard let bytes, let image = UIImage(data: bytes) else { return nil }
-        memory.setObject(image, forKey: value as NSString, cost: bytes.count)
+        guard let bytes, let source = CGImageSourceCreateWithData(bytes as CFData, nil),
+              let thumbnail = CGImageSourceCreateThumbnailAtIndex(source, 0, [
+                kCGImageSourceCreateThumbnailFromImageAlways: true,
+                kCGImageSourceThumbnailMaxPixelSize: 1600,
+                kCGImageSourceCreateThumbnailWithTransform: true
+              ] as CFDictionary) else { return nil }
+        let image = UIImage(cgImage: thumbnail)
+        memory.setObject(image, forKey: value as NSString, cost: thumbnail.bytesPerRow * thumbnail.height)
         return image
     }
     private func trimDisk() {

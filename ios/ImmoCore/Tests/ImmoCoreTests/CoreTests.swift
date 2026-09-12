@@ -33,7 +33,7 @@ final class CoreTests: XCTestCase {
         XCTAssertFalse(listing.isNew(at: listing.firstSeenDate.addingTimeInterval(-1)))
     }
     func testPreferencesRoundTrip() throws {
-        var prefs = SearchPreferences(); prefs.city = "Évry"; prefs.minRooms = 7
+        var prefs = SearchPreferences(); prefs.city = "Évry"; prefs.minRooms = 7; prefs.transactionType = "rent"
         prefs.disabledSources = ["pap"]; prefs.maxPrice = 420000
         let data = try JSONCoding.encoder().encode(prefs)
         XCTAssertEqual(try JSONCoding.decoder().decode(SearchPreferences.self, from: data), prefs)

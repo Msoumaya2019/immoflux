@@ -101,7 +101,7 @@ public struct SearchPreferences: Codable, Equatable {
     public var radiusKm: Double = 0
     public var centerLatitude: Double? = 48.973
     public var centerLongitude: Double? = 2.346
-    public var transaction = "sale"
+    public var transactionType = "sale"
     public var minRooms = 4
     public var minBedrooms = 0
     public var minPrice: Double = 0
@@ -122,7 +122,7 @@ public struct SearchPreferences: Codable, Equatable {
             guard Self.fold(item.city) == Self.fold(city.trimmingCharacters(in: .whitespacesAndNewlines)),
                   postalCode.isEmpty || item.postalCode == postalCode else { return false }
         }
-        guard item.transactionType == transaction, types.contains(item.propertyType),
+        guard item.transactionType == transactionType, types.contains(item.propertyType),
               (item.rooms ?? 0) >= minRooms, (item.bedrooms ?? 0) >= minBedrooms,
               (minPrice == 0 || (item.price ?? -1) >= minPrice),
               (maxPrice == 0 || (item.price ?? .infinity) <= maxPrice),
