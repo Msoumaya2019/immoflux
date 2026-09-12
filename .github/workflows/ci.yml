@@ -38,4 +38,5 @@ jobs:
         if: always()
         env:
           RESULT: ${{ job.status }}
-        run: printf '## Tests backend et sécurité\n\nRésultat : %s\n' "$RESULT" >> "$GITHUB_STEP_SUMMARY"
+        run: |
+          printf '## Tests backend et sécurité\n\nRésultat : %s\n' "$RESULT" >> "$GITHUB_STEP_SUMMARY"
