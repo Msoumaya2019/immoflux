@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-23T04:50:03Z",
+  "generatedAt": "2026-09-23T11:43:50Z",
   "providers": [
     {
       "id": "leboncoin",
@@ -8,7 +8,7 @@
       "enabled": false,
       "status": "disabled",
       "message": "Accès et republication non autorisés à ce stade ; adaptateur non implémenté.",
-      "lastRun": "2026-09-23T04:50:03Z",
+      "lastRun": "2026-09-23T11:43:50Z",
       "count": 0,
       "lastSuccess": null
     },
@@ -18,7 +18,7 @@
       "enabled": false,
       "status": "disabled",
       "message": "Test réel : HTTP 403. Accès technique bloqué malgré l’autorisation déclarée ; aucune protection contournée.",
-      "lastRun": "2026-09-23T04:50:03Z",
+      "lastRun": "2026-09-23T11:43:50Z",
       "count": 0,
       "lastSuccess": null
     },
@@ -28,7 +28,7 @@
       "enabled": false,
       "status": "disabled",
       "message": "Accès et republication non autorisés à ce stade ; adaptateur non implémenté.",
-      "lastRun": "2026-09-23T04:50:03Z",
+      "lastRun": "2026-09-23T11:43:50Z",
       "count": 0,
       "lastSuccess": null
     },
@@ -38,7 +38,7 @@
       "enabled": true,
       "status": "error",
       "message": "Échec de collecte (HTTP 403). Dernières données conservées.",
-      "lastRun": "2026-09-23T04:50:03Z",
+      "lastRun": "2026-09-23T11:43:50Z",
       "count": 0,
       "lastSuccess": "2026-09-12T07:29:44Z"
     },
@@ -48,7 +48,7 @@
       "enabled": false,
       "status": "disabled",
       "message": "Agence et flux autorisé à identifier ; adaptateur non implémenté.",
-      "lastRun": "2026-09-23T04:50:03Z",
+      "lastRun": "2026-09-23T11:43:50Z",
       "count": 0,
       "lastSuccess": null
     },
@@ -58,7 +58,7 @@
       "enabled": false,
       "status": "disabled",
       "message": "Aucun flux autorisé configuré ; tests uniquement sur fixtures locales.",
-      "lastRun": "2026-09-23T04:50:03Z",
+      "lastRun": "2026-09-23T11:43:50Z",
       "count": 0,
       "lastSuccess": null
     }
