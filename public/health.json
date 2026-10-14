@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-14T11:59:40Z",
+  "generatedAt": "2026-10-14T17:16:38Z",
   "status": "degraded",
-  "lastWorkflowRun": "2026-10-14T11:59:40Z",
+  "lastWorkflowRun": "2026-10-14T17:16:38Z",
   "lastSuccessfulFetch": "2026-09-12T07:29:44Z",
   "activeProviders": 0
 }
